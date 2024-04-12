@@ -1,6 +1,6 @@
 from typing import Any
 
-from db.models import Base
+from app.db.models import Base
 
 repository_registry = {}
 

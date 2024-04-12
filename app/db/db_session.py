@@ -3,13 +3,13 @@ from typing import Any
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
-from db.decorator import repository_registry
-from db.models import Base
+from app.db.decorator import repository_registry
+from app.db.models import Base
 
 
 class DbSession:
     def __init__(self, engine: Engine) -> None:
-        self.session = Session(engine)
+        self.session = Session(engine, expire_on_commit=False)
 
     def get_repository(self, model_class: Any) -> Any|None:
         """

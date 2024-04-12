@@ -4,10 +4,6 @@ loglevel=debug
 [database]
 dsn=postgresql+psycopg://postgres:postgres@pseudonym_db:5432/postgres
 
-[example]
-argument1 = "foobar"
-argument2 = true
-
 [uvicorn]
 swagger_enabled = True
 docs_url = /docs
