@@ -1,16 +1,13 @@
 
 from sqlalchemy import select
-from sqlalchemy.orm import Session
 
+from app.db.repository import RepositoryBase
 from app.db.decorator import repository
 from app.db.models import PseudonymEntry
 
 
 @repository(PseudonymEntry)
-class PseudonymEntryRepository:
-    def __init__(self, session: Session):
-        self.session = session
-
+class PseudonymEntryRepository(RepositoryBase):
     def find_by_bsn(self, hashed_bsn: str) -> PseudonymEntry | None:
         stmt = select(PseudonymEntry).where(PseudonymEntry.hashed_bsn == hashed_bsn)
         return self.session.execute(stmt).scalars().first()

@@ -26,29 +26,34 @@ class TestService(unittest.TestCase):
 
 
         entry2 = service.exchange(entry1.pseudonym, provider2)
-        self.assertIsNotNone(entry2)
+        if entry2 is None:
+            self.fail("Entry2 is None")
         self.assertEqual(entry2.hashed_bsn, bsnhash1)
         self.assertEqual(entry2.provider, provider2)
         self.assertNotEqual(entry2.pseudonym, entry1.pseudonym)
 
         entry3 = service.exchange(entry2.pseudonym, provider1)
-        self.assertIsNotNone(entry3)
+        if entry3 is None:
+            self.fail("Entry3 is None")
         self.assertEqual(entry3.hashed_bsn, bsnhash1)
         self.assertEqual(entry3.provider, provider1)
         self.assertEqual(entry3.pseudonym, entry1.pseudonym)
 
         entry4 = service.register(bsnhash1, provider2)
-        self.assertIsNotNone(entry4)
+        if entry4 is None:
+            self.fail("Entry4 is None")
         self.assertEqual(entry4.hashed_bsn, bsnhash1)
         self.assertEqual(entry4.provider, provider2)
         self.assertEqual(entry4.pseudonym, entry2.pseudonym)
 
         # Register second hash in provider3 and exchange to provider1. It should be a different pseudonym than in entry1
         entry5 = service.register(bsnhash2, provider3)
-        self.assertIsNotNone(entry5)
-        entry6 = service.exchange(entry5.pseudonym, provider1)
-        self.assertIsNotNone(entry6)
+        if entry5 is None:
+            self.fail("Entry5 is None")
 
+        entry6 = service.exchange(entry5.pseudonym, provider1)
+        if entry6 is None:
+            self.fail("Entry6 is None")
         self.assertEqual(entry1.provider, entry6.provider)
         self.assertNotEqual(entry1.provider, entry5.provider)
         self.assertNotEqual(entry6.provider, entry5.provider)

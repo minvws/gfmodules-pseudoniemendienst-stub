@@ -1,8 +1,9 @@
-from typing import Any
+from typing import Type
 
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
+from app.db.repository import RepositoryBase
 from app.db.decorator import repository_registry
 from app.db.models import Base
 
@@ -11,17 +12,17 @@ class DbSession:
     def __init__(self, engine: Engine) -> None:
         self.session = Session(engine, expire_on_commit=False)
 
-    def get_repository(self, model_class: Any) -> Any|None:
+    def get_repository(self, model: Type[Base]) -> RepositoryBase:
         """
         Returns an instantiated repository for the given model class
 
-        :param model_class:
+        :param model:
         :return:
         """
-        repo_class = repository_registry.get(model_class)
+        repo_class = repository_registry.get(model)
         if repo_class:
             return repo_class(self.session)
-        raise ValueError(f"No repository registered for model {model_class}")
+        raise ValueError(f"No repository registered for model {model}")
 
     def add_resource(self, entry: Base) -> None:
         """
