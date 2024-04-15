@@ -1,5 +1,4 @@
 from __future__ import annotations
-from pydantic import BaseModel
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
@@ -19,20 +18,3 @@ class PseudonymEntry(Base):
     def __repr__(self) -> str:
         return f"<PseudonymEntry(hashed_bsn={self.hashed_bsn}, provider={self.provider}, pseudonym={self.pseudonym})>"
 
-
-class RegisterRequest(BaseModel):
-    provider_id: str
-    bsn_hash: str
-
-
-class RegisterResponse(BaseModel):
-    pseudonym: str
-
-
-class ExchangeRequest(BaseModel):
-    target_provider_id: str
-    source_pseudonym: str
-
-
-class ExchangeResponse(BaseModel):
-    pseudonym: str

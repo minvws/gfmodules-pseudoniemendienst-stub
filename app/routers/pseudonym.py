@@ -1,13 +1,31 @@
 import logging
 
 from fastapi import APIRouter, HTTPException, Depends
+from pydantic import BaseModel
 
 from app import container
-from app.db.models import RegisterRequest, RegisterResponse, ExchangeRequest, ExchangeResponse
 from app.pseudonym.service import PseudonymService
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+
+class RegisterRequest(BaseModel):
+    provider_id: str
+    bsn_hash: str
+
+
+class RegisterResponse(BaseModel):
+    pseudonym: str
+
+
+class ExchangeRequest(BaseModel):
+    target_provider_id: str
+    source_pseudonym: str
+
+
+class ExchangeResponse(BaseModel):
+    pseudonym: str
 
 
 @router.post("/register",
