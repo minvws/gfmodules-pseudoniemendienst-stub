@@ -29,7 +29,8 @@ RUN apt update && \
     apt install -y \
         git \
         gnupg2 \
-        make \
+        libsqlite3-dev \
+        build-essential \
         postgresql-client-15 \
         postgresql-client-common
 
