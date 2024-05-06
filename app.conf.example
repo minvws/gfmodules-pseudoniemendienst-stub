@@ -6,6 +6,16 @@ loglevel=debug
 # Dsn for database connection
 dsn=postgresql+psycopg://postgres:postgres@localhost:5432/postgres
 
+[telemetry]
+# Telemetry is enabled or not
+enabled = False
+# Endpoint to GRPC server for telemetry
+endpoint = http://localhost:4317
+# Service name to use
+service_name = localisation
+# Tracer name to use
+tracer_name = zmodules.service.localisation
+
 [uvicorn]
 # If true, the api docs will be enabled
 swagger_enabled = True

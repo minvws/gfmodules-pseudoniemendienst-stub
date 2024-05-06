@@ -25,6 +25,13 @@ class ConfigDatabase(BaseModel):
     dsn: str
 
 
+class ConfigTelemetry(BaseModel):
+    enabled: bool = Field(default=False)
+    endpoint: str | None
+    service_name: str | None
+    tracer_name: str | None
+
+
 class ConfigUvicorn(BaseModel):
     swagger_enabled: bool = Field(default=False)
     docs_url: str = Field(default="/docs")
@@ -42,6 +49,7 @@ class Config(BaseModel):
     app: ConfigApp
     database: ConfigDatabase
     uvicorn: ConfigUvicorn
+    telemetry: ConfigTelemetry
 
 
 def read_ini_file(path: str) -> Any:
