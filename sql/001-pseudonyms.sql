@@ -6,6 +6,8 @@ create table public.pseudonyms
     pseudonym  varchar(36) not null
 );
 
+ALTER TABLE pseudonyms OWNER TO pseudonym;
+
 create index ix_pseudonyms_hashed_bsn
     on public.pseudonyms (hashed_bsn);
 
