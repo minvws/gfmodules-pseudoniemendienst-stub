@@ -1,4 +1,4 @@
-from typing import Type
+from typing import Type, Any
 
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session
@@ -11,6 +11,12 @@ from app.db.models import Base
 class DbSession:
     def __init__(self, engine: Engine) -> None:
         self.session = Session(engine, expire_on_commit=False)
+
+    def __enter__(self) -> 'DbSession':
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self.session.close()
 
     def get_repository(self, model: Type[Base]) -> RepositoryBase:
         """
