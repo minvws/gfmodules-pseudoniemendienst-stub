@@ -1,8 +1,8 @@
 
 import inject
-from db.db import Database
-from config import get_config
-from pseudonym.service import PseudonymService
+from app.db.db import Database
+from app.config import get_config
+from app.pseudonym.service import PseudonymService
 
 
 def container_config(binder: inject.Binder) -> None:
