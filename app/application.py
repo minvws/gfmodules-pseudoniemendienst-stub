@@ -6,10 +6,10 @@ from fastapi import FastAPI
 import uvicorn
 
 from app.telemetry import setup_telemetry
-from routers.default import router as default_router
-from routers.health import router as health_router
-from routers.pseudonym import router as pseudonym_router
-from config import get_config
+from app.routers.default import router as default_router
+from app.routers.health import router as health_router
+from app.routers.pseudonym import router as pseudonym_router
+from app.config import get_config
 
 
 def get_uvicorn_params() -> dict[str, Any]:
