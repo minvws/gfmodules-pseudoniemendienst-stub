@@ -1,4 +1,4 @@
-import application
+from app import application
 from app import container
 
 if __name__ == "__main__":
