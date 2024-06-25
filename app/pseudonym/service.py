@@ -25,7 +25,7 @@ class PseudonymService:
                 provider=provider,
                 pseudonym=str(uuid.uuid4())
             )
-            session.add_resource(new_entry)
+            session.add(new_entry)
             session.commit()
 
             return new_entry
@@ -51,7 +51,7 @@ class PseudonymService:
                 provider=target_provider,
                 pseudonym = str(uuid.uuid4()),
             )
-            session.add_resource(new_entry)
+            session.add(new_entry)
             session.commit()
 
         return new_entry
