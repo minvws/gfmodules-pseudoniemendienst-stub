@@ -1,10 +1,9 @@
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('cd6f49aa-8dbe-47f6-9dba-63224aea5968', '2b826afa1c71f571a007dad61ce9fb9b63a24a328aa4ac009484a198ff565c51', 'd058e1e8-e4a2-4918-9ded-19dfb81fdc4f', 'df44a842-a748-4bb2-8d6e-39e44fee9af6');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('4a62b90b-ccc0-4fdf-b9c2-0f89506a2bed', '7024c9f231f430d951cf0271982f178d9534a612c8a4ed30fbe5d65f413548dc', 'd058e1e8-e4a2-4918-9ded-19dfb81fdc4f', '52eea653-32d6-4832-9648-354b265b7307');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('c5a3cd91-8ffb-47d1-a2d2-1dbd44daf6c0', '2238fb11a7b1f224f1a4a0a7700e0ae938597bd3d2c84ad94cb16b91857e1d42', 'd058e1e8-e4a2-4918-9ded-19dfb81fdc4f', 'aa1fa277-ae0b-4e22-a151-e47a9dba110a');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('8b10fc5f-6664-4002-9b7b-adda133bacfe', 'c4841fa6cadaea7af986a9b7c1967132ec13ef17ff08229b5285fae6d2dffa9e', 'd058e1e8-e4a2-4918-9ded-19dfb81fdc4f', 'd3ffdaf2-dce7-4cc8-b721-e2aaa0bcf3f0');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('5f7dc524-1532-4089-b3f0-f425f8dbd181', 'b9f6461934ab948268eb6cbd7f5ac8375da1bd25f006c34a62b9f9a2d1eef00a', 'd058e1e8-e4a2-4918-9ded-19dfb81fdc4f', '3aec2fd4-81bf-4b90-b5bc-e1c8a45675bc');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('a2078a71-42a0-4aa3-9f07-6bb4f19c183e', 'c4841fa6cadaea7af986a9b7c1967132ec13ef17ff08229b5285fae6d2dffa9e', 'dcc2217b-600e-4587-b74a-6b04bf3a882b', 'cb5d785e-6710-4910-963f-39c85b39e491');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('9b4aca9c-4600-4c71-a235-bc9cdbe7eddd', '2238fb11a7b1f224f1a4a0a7700e0ae938597bd3d2c84ad94cb16b91857e1d42', 'dcc2217b-600e-4587-b74a-6b04bf3a882b', 'c41ef88d-9d06-4a81-9df8-a2b0f9534ab9');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('9b0fc48e-5761-4a3e-bf32-854172440da1', 'b9f6461934ab948268eb6cbd7f5ac8375da1bd25f006c34a62b9f9a2d1eef00a', 'dcc2217b-600e-4587-b74a-6b04bf3a882b', 'd8ee4fb0-e0e3-4a31-9255-2d140f86762e');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('22d1d4f1-1389-4fda-879c-39d7f6545d6d', '7024c9f231f430d951cf0271982f178d9534a612c8a4ed30fbe5d65f413548dc', 'dcc2217b-600e-4587-b74a-6b04bf3a882b', '48521bd8-26a9-47d3-badc-c0190263c087');
-INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('12f7d17c-cbb8-433b-933b-856d9fbc30f2', '2b826afa1c71f571a007dad61ce9fb9b63a24a328aa4ac009484a198ff565c51', 'dcc2217b-600e-4587-b74a-6b04bf3a882b', '5afda8a1-dce9-43f8-b1af-c4dc765e7e17');
+---- Timeline:
+-- BSN 950000012:
+INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('5c83a883-74d0-4dcb-a6b2-5d3cda0c16de', '2b826afa1c71f571a007dad61ce9fb9b63a24a328aa4ac009484a198ff565c51', '065972ba-5555-426a-a618-fb1bec0c048a', '677b33c7-30e0-4fe1-a740-87fd73c4dfaf');
+
+---- Localisation Service
+INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('afb82a65-f6ce-4358-910a-2f617d9179c1', '2b826afa1c71f571a007dad61ce9fb9b63a24a328aa4ac009484a198ff565c51', 'dcc2217b-600e-4587-b74a-6b04bf3a882b', '5afda8a1-dce9-43f8-b1af-c4dc765e7e17');
+
+---- Metadata Service
+INSERT INTO public.pseudonyms (id, hashed_bsn, provider, pseudonym) VALUES ('09a30098-81b0-4ded-9a45-2ca71b5192f5', '2b826afa1c71f571a007dad61ce9fb9b63a24a328aa4ac009484a198ff565c51', '28f781a3-58c8-5e81-998c-28c71c25ce2b', 'bbf54282-3d58-4bed-b27b-dd4e1b85ec08');
