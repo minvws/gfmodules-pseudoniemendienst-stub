@@ -36,4 +36,3 @@ for file in sql/*.sql; do
         echo "INSERT INTO migrations (name) VALUES ('$file');" | psql -h $DB_HOST -U $DB_USER -d $DB_NAME -o /dev/null
     fi
 done
-

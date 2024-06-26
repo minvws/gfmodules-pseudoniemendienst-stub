@@ -2,11 +2,16 @@ import unittest
 import uuid
 from hashlib import sha256
 
+from app.config import set_config
 from app.db.db import Database
 from app.pseudonym.service import PseudonymService
+from test_config import get_test_config
 
 
 class TestService(unittest.TestCase):
+
+    def setUp(self) -> None:
+        set_config(get_test_config())
 
     def test_health(self) -> None:
         db = Database("sqlite://")
