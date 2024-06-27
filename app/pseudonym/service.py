@@ -1,8 +1,6 @@
 import uuid
-from typing import cast
 
 from app.db.db import Database
-from app.db.session import DbSession
 from app.db.models import PseudonymEntry
 from app.db.repository.pseudonym_entry import PseudonymEntryRepository
 
@@ -13,7 +11,7 @@ class PseudonymService:
 
     def register(self, hashed_bsn: str, provider: str) -> PseudonymEntry:
         with self.db.get_db_session() as session:
-            repository = self.get_pseudonym_entry_repository(session)
+            repository = session.get_repository(PseudonymEntryRepository)
 
             entry = repository.find_by_bsn_and_provider(hashed_bsn, provider)
             if entry is not None:
@@ -32,7 +30,7 @@ class PseudonymService:
 
     def exchange(self, pseudonym: str, target_provider: str) -> PseudonymEntry|None:
         with self.db.get_db_session() as session:
-            repository = self.get_pseudonym_entry_repository(session)
+            repository = session.get_repository(PseudonymEntryRepository)
 
             # Find the requested pseudonym in the database
             cur_entry = repository.find_by_pseudonym(pseudonym)
@@ -55,10 +53,3 @@ class PseudonymService:
             session.commit()
 
         return new_entry
-
-    @staticmethod
-    def get_pseudonym_entry_repository(session: DbSession) -> PseudonymEntryRepository:
-        return cast(
-            PseudonymEntryRepository,
-            session.get_repository(PseudonymEntry)
-        )
