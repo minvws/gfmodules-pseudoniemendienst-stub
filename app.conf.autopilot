@@ -13,8 +13,8 @@ pool_recycle=1800
 [telemetry]
 enabled = True
 endpoint = http://tracing:4317
-service_name = pseudonym
-tracer_name = zmodules.service.pseudonym
+service_name = Pseudoniemen Dienst
+tracer_name = zmodules.service.pseudonym_service
 
 [uvicorn]
 swagger_enabled = True
