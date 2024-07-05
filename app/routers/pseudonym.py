@@ -53,11 +53,11 @@ def post_exchange(
 ) -> ExchangeResponse:
 
     span = trace.get_current_span()
-    span.set_attribute("data.source_pseudonym", req.source_pseudonym)
-    span.set_attribute("data.target_provider_id", req.target_provider_id)
+    span.update_name(f"POST /exchange source_pseudonym={req.source_pseudonym} target_provider_id={req.target_provider_id}")
 
     entry = service.exchange(req.source_pseudonym, req.target_provider_id)
     if entry is None:
         raise HTTPException(status_code=404, detail="Pseudonym not found")
 
+    span.set_attribute("data.pseudonym", entry.pseudonym)
     return ExchangeResponse(pseudonym=entry.pseudonym)

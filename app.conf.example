@@ -24,9 +24,9 @@ enabled = False
 # Endpoint to GRPC server for telemetry
 endpoint = http://localhost:4317
 # Service name to use
-service_name = localisation
+service_name = Pseudoniemen Dienst
 # Tracer name to use
-tracer_name = zmodules.service.localisation
+tracer_name = zmodules.service.pseudonym_service
 
 [uvicorn]
 # If true, the api docs will be enabled
