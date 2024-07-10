@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "zmodules-pseudonym-service"
+name = "gfmodules-pseudonym-service"
 version = "0.1.0"
 description = ""
 license = "EUPL-1.2"

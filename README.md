@@ -1,4 +1,8 @@
-# ZModules Pseudonym Service
+### GFModules Pseudonym Service
+
+The Pseudonym Service is responsible for the pseudonymisation of the BSN. Preferably the
+BSNk service would be used instead of this service. But because the BSNk is still under
+development, the Pseudonym Service is used.
 
 
 ## First run
