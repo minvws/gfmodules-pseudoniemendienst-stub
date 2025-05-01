@@ -187,4 +187,5 @@ jobs:
                 build-args: |
                   NEW_UID=${{ env.NEW_UID }}
                   NEW_GID=${{ env.NEW_GID }}
+                  standalone=true
 
