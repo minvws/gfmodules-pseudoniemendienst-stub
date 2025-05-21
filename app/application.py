@@ -1,16 +1,15 @@
 import logging
-
 from typing import Any
 
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 
-from app.stats import StatsdMiddleware, setup_stats
-from app.telemetry import setup_telemetry
+from app.config import get_config
 from app.routers.default import router as default_router
 from app.routers.health import router as health_router
 from app.routers.pseudonym import router as pseudonym_router
-from app.config import get_config
+from app.stats import StatsdMiddleware, setup_stats
+from app.telemetry import setup_telemetry
 
 
 def get_uvicorn_params() -> dict[str, Any]:
@@ -23,10 +22,11 @@ def get_uvicorn_params() -> dict[str, Any]:
         "reload_delay": config.uvicorn.reload_delay,
         "reload_dirs": config.uvicorn.reload_dirs,
     }
-    if (config.uvicorn.use_ssl and
-            config.uvicorn.ssl_base_dir is not None and
-            config.uvicorn.ssl_cert_file is not None and
-            config.uvicorn.ssl_key_file is not None
+    if (
+        config.uvicorn.use_ssl
+        and config.uvicorn.ssl_base_dir is not None
+        and config.uvicorn.ssl_cert_file is not None
+        and config.uvicorn.ssl_key_file is not None
     ):
         kwargs["ssl_keyfile"] = (
             config.uvicorn.ssl_base_dir + "/" + config.uvicorn.ssl_key_file
@@ -73,13 +73,9 @@ def setup_fastapi() -> FastAPI:
     config = get_config()
 
     fastapi = (
-        FastAPI(
-            docs_url=config.uvicorn.docs_url,
-            redoc_url=config.uvicorn.redoc_url
-        ) if config.uvicorn.swagger_enabled else FastAPI(
-            docs_url=None,
-            redoc_url=None
-        )
+        FastAPI(docs_url=config.uvicorn.docs_url, redoc_url=config.uvicorn.redoc_url)
+        if config.uvicorn.swagger_enabled
+        else FastAPI(docs_url=None, redoc_url=None)
     )
 
     routers = [default_router, health_router, pseudonym_router]
@@ -87,6 +83,8 @@ def setup_fastapi() -> FastAPI:
         fastapi.include_router(router)
 
     if get_config().stats.enabled:
-        fastapi.add_middleware(StatsdMiddleware, module_name=get_config().stats.module_name)
+        fastapi.add_middleware(
+            StatsdMiddleware, module_name=get_config().stats.module_name
+        )
 
     return fastapi

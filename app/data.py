@@ -1,12 +1,15 @@
-import uuid
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Optional
+from typing import Any
+
 
 @dataclass
 class UraNumber:
     def __init__(self, value: Any) -> None:
-        if (isinstance(value, int) or isinstance(value, str)) and len(str(value)) <= 8 and str(value).isdigit():
+        if (
+            (isinstance(value, int) or isinstance(value, str))
+            and len(str(value)) <= 8
+            and str(value).isdigit()
+        ):
             self.value = str(value).zfill(8)
         else:
             # See https://www.zorgcsp.nl/documents/10-01-2025%20RK1%20CPS%20UZI-register%20V11.9%20NL.pdf

@@ -8,14 +8,21 @@ from starlette.requests import Request
 
 from app.data import UraNumber
 from app.db.db import Database
-from app.db.repository.ura_number_allowlist_repository import UraNumberAllowlistRepository
+from app.db.repository.ura_number_allowlist_repository import (
+    UraNumberAllowlistRepository,
+)
 from app.middleware.ura_middleware.ura_middleware import UraMiddleware
 
 logger = logging.getLogger(__name__)
 
 
 class AllowlistedUraMiddleware(UraMiddleware):
-    def __init__(self, db: Database, ura_middleware: UraMiddleware, allowlist_cache_in_seconds: int):
+    def __init__(
+        self,
+        db: Database,
+        ura_middleware: UraMiddleware,
+        allowlist_cache_in_seconds: int,
+    ):
         self._db = db
         self._ura_middleware = ura_middleware
         self._cached = 0.0
@@ -26,7 +33,9 @@ class AllowlistedUraMiddleware(UraMiddleware):
         logger.debug("Initializing allowlist from DB")
         self._cached = time.time()
         with self._db.get_db_session() as db_session:
-            allowlist_repository = db_session.get_repository(UraNumberAllowlistRepository)
+            allowlist_repository = db_session.get_repository(
+                UraNumberAllowlistRepository
+            )
             return [entry.ura_number for entry in allowlist_repository.get_all()]
 
     @property
@@ -40,7 +49,9 @@ class AllowlistedUraMiddleware(UraMiddleware):
 
     def _validate(self, ura_number: UraNumber) -> UraNumber:
         if ura_number not in self.allowlist:
-            logger.debug(f"URA with ura_number(str({ura_number})) is not in the allowlist")
+            logger.debug(
+                f"URA with ura_number(str({ura_number})) is not in the allowlist"
+            )
             raise HTTPException(status_code=403, detail="URA number not in allowlist")
         return ura_number
 

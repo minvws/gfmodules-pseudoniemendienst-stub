@@ -2,19 +2,19 @@ import unittest
 import uuid
 from hashlib import sha256
 
-from app.config import set_config
+from tests.test_config import get_test_config
+
+from app.config import ConfigDatabase, set_config
 from app.db.db import Database
 from app.pseudonym.service import PseudonymService
-from test_config import get_test_config
 
 
 class TestService(unittest.TestCase):
-
     def setUp(self) -> None:
         set_config(get_test_config())
 
     def test_health(self) -> None:
-        db = Database("sqlite://")
+        db = Database(ConfigDatabase(dsn="sqlite://"))
         db.generate_tables()
         service = PseudonymService(db)
 
@@ -28,7 +28,6 @@ class TestService(unittest.TestCase):
         self.assertIsNotNone(entry1)
         self.assertEqual(entry1.hashed_bsn, bsnhash1)
         self.assertEqual(entry1.provider, provider1)
-
 
         entry2 = service.exchange(entry1.pseudonym, provider2)
         if entry2 is None:

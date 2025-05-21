@@ -1,8 +1,7 @@
 import logging
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from opentelemetry import trace
-
 from pydantic import BaseModel
 
 from app import container, dependencies
@@ -31,10 +30,11 @@ class ExchangeResponse(BaseModel):
     pseudonym: str
 
 
-@router.post("/register",
-            summary="Register a new pseudonym for a (hashed) BSN",
-            tags=["pseudonym"]
-            )
+@router.post(
+    "/register",
+    summary="Register a new pseudonym for a (hashed) BSN",
+    tags=["pseudonym"],
+)
 def post_register(
     req: RegisterRequest,
     service: PseudonymService = Depends(container.get_pseudonym_service),
@@ -48,18 +48,18 @@ def post_register(
     return RegisterResponse(pseudonym=entry.pseudonym)
 
 
-@router.post("/exchange",
-            summary="Exchange a pseudonym for another one",
-            tags=["pseudonym"]
-            )
+@router.post(
+    "/exchange", summary="Exchange a pseudonym for another one", tags=["pseudonym"]
+)
 def post_exchange(
     req: ExchangeRequest,
     service: PseudonymService = Depends(container.get_pseudonym_service),
     _: UraNumber = Depends(dependencies.authenticated_ura),
 ) -> ExchangeResponse:
-
     span = trace.get_current_span()
-    span.update_name(f"POST /exchange source_pseudonym={req.source_pseudonym} target_provider_id={req.target_provider_id}")
+    span.update_name(
+        f"POST /exchange source_pseudonym={req.source_pseudonym} target_provider_id={req.target_provider_id}"
+    )
 
     entry = service.exchange(req.source_pseudonym, req.target_provider_id)
     if entry is None:

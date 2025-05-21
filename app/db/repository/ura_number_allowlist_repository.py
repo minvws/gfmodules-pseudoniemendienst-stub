@@ -1,4 +1,4 @@
-from typing import Sequence, cast
+from typing import Sequence
 
 from sqlalchemy import select
 
@@ -14,7 +14,4 @@ class UraNumberAllowlistRepository(RepositoryBase):
         super().__init__(db_session)
 
     def get_all(self) -> Sequence[UraNumberAllowlistEntity]:
-        return cast(
-            Sequence[UraNumberAllowlistEntity],
-            self.db_session.execute(select(UraNumberAllowlistEntity)).scalars().all(),
-        )
+        return self.db_session.execute(select(UraNumberAllowlistEntity)).scalars().all()

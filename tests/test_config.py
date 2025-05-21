@@ -1,5 +1,13 @@
-from app.config import Config, ConfigApp, LogLevel, ConfigDatabase, ConfigUvicorn, ConfigTelemetry, ConfigStats, \
-    ConfigUraMiddleware
+from app.config import (
+    Config,
+    ConfigApp,
+    ConfigDatabase,
+    ConfigStats,
+    ConfigTelemetry,
+    ConfigUraMiddleware,
+    ConfigUvicorn,
+    LogLevel,
+)
 
 
 def get_test_config() -> Config:
@@ -29,13 +37,10 @@ def get_test_config() -> Config:
             service_name=None,
             tracer_name=None,
         ),
-        stats=ConfigStats(
-            enabled=False,
-            host=None,
-            port=None,
-            module_name=None
-        ),
+        stats=ConfigStats(enabled=False, host=None, port=None, module_name=None),
         ura_middleware=ConfigUraMiddleware(
-            override_authentication_ura=None, use_authentication_ura_allowlist=False, allowlist_cache_in_seconds=40
+            override_authentication_ura=None,
+            use_authentication_ura_allowlist=False,
+            allowlist_cache_in_seconds=40,
         ),
     )

@@ -1,5 +1,6 @@
 import pytest
 from fastapi import HTTPException
+from pytest_mock import MockerFixture
 from starlette.requests import Request
 from uzireader.uziserver import UziServer
 
@@ -7,7 +8,7 @@ from app.data import UraNumber
 from app.middleware.ura_middleware.request_ura_middleware import RequestUraMiddleware
 
 
-def test_authenticated_ura(mocker):
+def test_authenticated_ura(mocker: MockerFixture) -> None:
     request = mocker.MagicMock(spec=Request)
     request.headers = {"x-proxy-ssl_client_cert": "cert-content"}
 
@@ -15,7 +16,9 @@ def test_authenticated_ura(mocker):
     dic = {"SubscriberNumber": 12345679}
     mock_class.__getitem__.side_effect = dic.__getitem__
 
-    uzi_server_creation_mock = mocker.patch.object(UziServer, "__new__", return_value=mock_class)
+    uzi_server_creation_mock = mocker.patch.object(
+        UziServer, "__new__", return_value=mock_class
+    )
 
     actual = RequestUraMiddleware().authenticated_ura(request)
 
@@ -29,7 +32,7 @@ def test_authenticated_ura(mocker):
     mock_class.__getitem__.assert_called_with("SubscriberNumber")
 
 
-def test_authenticated_ura_when_header_not_present(mocker):
+def test_authenticated_ura_when_header_not_present(mocker: MockerFixture) -> None:
     request = mocker.MagicMock(spec=Request)
     request.headers = {}
 
@@ -37,7 +40,7 @@ def test_authenticated_ura_when_header_not_present(mocker):
         RequestUraMiddleware().authenticated_ura(request)
 
 
-def test_enforce_cert_newlines_with_headers(mocker):
+def test_enforce_cert_newlines_with_headers(mocker: MockerFixture) -> None:
     request = mocker.MagicMock(spec=Request)
     request.headers = {"x-proxy-ssl_client_cert": "cert-content"}
 
@@ -49,7 +52,7 @@ def test_enforce_cert_newlines_with_headers(mocker):
     assert actual == expected
 
 
-def test_enforce_cert_newlines_without_headers(mocker):
+def test_enforce_cert_newlines_without_headers(mocker: MockerFixture) -> None:
     request = mocker.MagicMock(spec=Request)
     request.headers = {"x-proxy-ssl_client_cert": "cert-content"}
 

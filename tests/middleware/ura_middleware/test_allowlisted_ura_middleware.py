@@ -12,7 +12,9 @@ from starlette.requests import Request
 from app.data import UraNumber
 from app.db.db import Database
 from app.db.models.ura_number_allowlist import UraNumberAllowlistEntity
-from app.middleware.ura_middleware.allowlisted_ura_middleware import AllowlistedUraMiddleware
+from app.middleware.ura_middleware.allowlisted_ura_middleware import (
+    AllowlistedUraMiddleware,
+)
 from app.middleware.ura_middleware.request_ura_middleware import RequestUraMiddleware
 
 
@@ -26,11 +28,15 @@ def allowlisted_ura_middleware(
     database: Database, request_ura_middleware_mock: RequestUraMiddleware
 ) -> AllowlistedUraMiddleware:
     return AllowlistedUraMiddleware(
-        db=database, ura_middleware=request_ura_middleware_mock, allowlist_cache_in_seconds=30
+        db=database,
+        ura_middleware=request_ura_middleware_mock,
+        allowlist_cache_in_seconds=30,
     )
 
 
-def test_allowlist(allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database) -> None:
+def test_allowlist(
+    allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database
+) -> None:
     ura_number = UraNumber(random.randint(0, 99999999))
     with database.get_db_session() as session:
         session.add(UraNumberAllowlistEntity(ura_number))
@@ -40,7 +46,9 @@ def test_allowlist(allowlisted_ura_middleware: AllowlistedUraMiddleware, databas
 
 
 def test_expire_allowlist(
-    allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database, mocker: MockerFixture
+    allowlisted_ura_middleware: AllowlistedUraMiddleware,
+    database: Database,
+    mocker: MockerFixture,
 ) -> None:
     start_time = time.time()
     assert allowlisted_ura_middleware.allowlist == []
@@ -64,7 +72,9 @@ def test_expire_allowlist(
     assert allowlisted_ura_middleware.allowlist == [ura_number_1, ura_number_2]
 
 
-def test_validate(allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database) -> None:
+def test_validate(
+    allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database
+) -> None:
     ura_number = UraNumber(random.randint(0, 99999999))
     with database.get_db_session() as session:
         session.add(UraNumberAllowlistEntity(ura_number))
@@ -73,7 +83,9 @@ def test_validate(allowlisted_ura_middleware: AllowlistedUraMiddleware, database
     allowlisted_ura_middleware._validate(ura_number)
 
 
-def test_validate_raises_unauthorized(allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database) -> None:
+def test_validate_raises_unauthorized(
+    allowlisted_ura_middleware: AllowlistedUraMiddleware, database: Database
+) -> None:
     ura_number = UraNumber(random.randint(1, 99999999))
     with database.get_db_session() as session:
         session.add(UraNumberAllowlistEntity(ura_number))
