@@ -1,7 +1,7 @@
 import uuid
 
 from app.db.db import Database
-from app.db.models import PseudonymEntry
+from app.db.models.pseudonym_entry import PseudonymEntry
 from app.db.repository.pseudonym_entry import PseudonymEntryRepository
 
 

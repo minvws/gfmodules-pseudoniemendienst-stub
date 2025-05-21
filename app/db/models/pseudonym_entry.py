@@ -2,9 +2,7 @@ from __future__ import annotations
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
-
-class Base(DeclarativeBase):
-    pass
+from app.db.models.base import Base
 
 
 class PseudonymEntry(Base):

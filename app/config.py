@@ -59,12 +59,20 @@ class ConfigUvicorn(BaseModel):
     ssl_cert_file: str | None
     ssl_key_file: str | None
 
+
+class ConfigUraMiddleware(BaseModel):
+    override_authentication_ura: str | None
+    use_authentication_ura_allowlist: bool = Field(default=True)
+    allowlist_cache_in_seconds: int = Field(default=30)
+
+
 class Config(BaseModel):
     app: ConfigApp
     database: ConfigDatabase
     uvicorn: ConfigUvicorn
     telemetry: ConfigTelemetry
     stats: ConfigStats
+    ura_middleware: ConfigUraMiddleware
 
 
 def read_ini_file(path: str) -> Any:

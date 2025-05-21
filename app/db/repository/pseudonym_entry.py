@@ -1,9 +1,9 @@
 
 from sqlalchemy import select
 
-from app.db.repository import RepositoryBase
+from app.db.repository.respository_base import RepositoryBase
 from app.db.decorator import repository
-from app.db.models import PseudonymEntry
+from app.db.models.pseudonym_entry import PseudonymEntry
 
 
 @repository(PseudonymEntry)

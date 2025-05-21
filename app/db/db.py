@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.config import get_config
 from app.db.session import DbSession
-from app.db.models import Base
+from app.db.models.base import Base
 
 logger = logging.getLogger(__name__)
 

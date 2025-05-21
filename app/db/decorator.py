@@ -1,7 +1,7 @@
 from typing import Type, Dict, Any
 
-from app.db.repository import RepositoryBase
-from app.db.models import Base
+from app.db.repository.respository_base import RepositoryBase
+from app.db.models.base import Base
 
 repository_registry: Dict[Type[Base], Type[RepositoryBase]] = {}
 

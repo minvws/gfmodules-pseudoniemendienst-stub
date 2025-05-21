@@ -5,7 +5,8 @@ from opentelemetry import trace
 
 from pydantic import BaseModel
 
-from app import container
+from app import container, dependencies
+from app.data import UraNumber
 from app.pseudonym.service import PseudonymService
 
 logger = logging.getLogger(__name__)
@@ -34,7 +35,11 @@ class ExchangeResponse(BaseModel):
             summary="Register a new pseudonym for a (hashed) BSN",
             tags=["pseudonym"]
             )
-def post_register(req: RegisterRequest, service: PseudonymService = Depends(container.get_pseudonym_service)) -> RegisterResponse:
+def post_register(
+    req: RegisterRequest,
+    service: PseudonymService = Depends(container.get_pseudonym_service),
+    _: UraNumber = Depends(dependencies.authenticated_ura),
+) -> RegisterResponse:
     span = trace.get_current_span()
     span.set_attribute("data.bsn_hash", req.bsn_hash)
     span.set_attribute("data.provider_id", req.provider_id)
@@ -49,7 +54,8 @@ def post_register(req: RegisterRequest, service: PseudonymService = Depends(cont
             )
 def post_exchange(
     req: ExchangeRequest,
-    service: PseudonymService = Depends(container.get_pseudonym_service)
+    service: PseudonymService = Depends(container.get_pseudonym_service),
+    _: UraNumber = Depends(dependencies.authenticated_ura),
 ) -> ExchangeResponse:
 
     span = trace.get_current_span()
