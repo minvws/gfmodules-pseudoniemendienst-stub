@@ -57,3 +57,11 @@ use_ssl = False
 ssl_base_dir = secrets/ssl
 ssl_cert_file = server.cert
 ssl_key_file = server.key
+
+[ura_middleware]
+# Override authentication URA for testing, or Empty when using the URA from the MTLS certificate
+override_authentication_ura=
+# Set use_authentication_ura_allowlist to False when allowlist should be ignored, default is True
+use_authentication_ura_allowlist=
+# Allowlist cache expiration time, defaults to 30 seconds
+allowlist_cache_in_seconds=

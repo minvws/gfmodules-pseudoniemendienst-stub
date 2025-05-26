@@ -1,18 +1,17 @@
 import logging
 import random
 from time import sleep
-from typing import Callable, Any, TypeVar, Type
+from typing import Any, Callable, List, Type, TypeVar
 
-from sqlalchemy import Engine
-from sqlalchemy.exc import OperationalError, DatabaseError, PendingRollbackError
+from sqlalchemy import Engine, Result
+from sqlalchemy.exc import DatabaseError, OperationalError, PendingRollbackError
 from sqlalchemy.orm import Session
 
-from app.config import get_config
-from app.db.models import Base
-from app.db.repository import TRepositoryBase, RepositoryBase
+from app.db.models.base import Base
+from app.db.repository import respository_base
 
 """
-This module contains the DbSession class, which is a context manager that provides a session to interact with 
+This module contains the DbSession class, which is a context manager that provides a session to interact with
 the database. It also provides methods to add and delete resources from the session, and to commit or rollback the
 current transaction.
 
@@ -22,19 +21,20 @@ Usage:
         repo = session.get_repository(MyModelRepository)
         repo.find_all()
         session.add_resource(MyModel())
-        session.commit()       
+        session.commit()
 """
 
 logger = logging.getLogger(__name__)
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class DbSession:
-    def __init__(self, engine: Engine) -> None:
+    def __init__(self, engine: Engine, retry_backoff: List[float]) -> None:
         self._engine = engine
+        self._retry_backoff = retry_backoff
 
-    def __enter__(self) -> 'DbSession':
+    def __enter__(self) -> "DbSession":
         """
         Create a new session when entering the context manager
         """
@@ -47,11 +47,13 @@ class DbSession:
         """
         self.session.close()
 
-    def get_repository(self, repository_class: Type[TRepositoryBase]) -> TRepositoryBase:
+    def get_repository(
+        self, repository_class: Type["respository_base.TRepositoryBase"]
+    ) -> "respository_base.TRepositoryBase":
         """
         Returns an instantiated repository
         """
-        if issubclass(repository_class, RepositoryBase):
+        if issubclass(repository_class, respository_base.RepositoryBase):
             return repository_class(self)
         raise ValueError(f"No repository registered for model {repository_class}")
 
@@ -90,7 +92,7 @@ class DbSession:
         """
         self._retry(self.session.rollback)
 
-    def execute(self, stmt: Any) -> Any:
+    def execute(self, stmt: Any) -> Result[Any]:
         """
         Execute a statement in the current session
 
@@ -111,7 +113,7 @@ class DbSession:
         """
         Retry a function call in case of database errors
         """
-        backoff = get_config().database.retry_backoff
+        backoff = self._retry_backoff
 
         while True:
             try:
@@ -133,5 +135,5 @@ class DbSession:
                 raise Exception("Operation failed after all retries")
 
             logger.info("Retrying operation in %s seconds", backoff[0])
-            sleep(backoff[0] + random.uniform(0, 0.1) )
+            sleep(backoff[0] + random.uniform(0, 0.1))
             backoff = backoff[1:]
