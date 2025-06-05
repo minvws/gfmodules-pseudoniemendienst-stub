@@ -2,11 +2,10 @@ import unittest
 import uuid
 from hashlib import sha256
 
-from tests.test_config import get_test_config
-
 from app.config import ConfigDatabase, set_config
 from app.db.db import Database
 from app.pseudonym.service import PseudonymService
+from tests.test_config import get_test_config
 
 
 class TestService(unittest.TestCase):

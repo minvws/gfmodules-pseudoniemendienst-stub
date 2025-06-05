@@ -1,10 +1,12 @@
 import configparser
+import os
 from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel, Field, ValidationError
 
 _PATH = "app.conf"
+_ENVIRONMENT_CONFIG_PATH_NAME = "FASTAPI_CONFIG_PATH"
 _CONFIG = None
 
 
@@ -62,7 +64,7 @@ class ConfigUvicorn(BaseModel):
 
 
 class ConfigUraMiddleware(BaseModel):
-    override_authentication_ura: str | None
+    override_authentication_ura: str | None = None
     use_authentication_ura_allowlist: bool = Field(default=True)
     allowlist_cache_in_seconds: int = Field(default=30)
 
@@ -83,8 +85,14 @@ def read_ini_file(path: str) -> Any:
     ret = {}
     for section in ini_data.sections():
         ret[section] = dict(ini_data[section])
-
+        remove_empty_values(ret[section])
     return ret
+
+
+def remove_empty_values(section: dict[str, Any]) -> None:
+    for key in list(section.keys()):
+        if section[key] == "":
+            del section[key]
 
 
 def reset_config() -> None:
@@ -104,8 +112,7 @@ def get_config(path: str | None = None) -> Config:
     if _CONFIG is not None:
         return _CONFIG
 
-    if path is None:
-        path = _PATH
+    path = path or os.environ.get(_ENVIRONMENT_CONFIG_PATH_NAME) or _PATH
 
     # To be inline with other python code, we use INI-type files for configuration. Since this isn't
     # a standard format for pydantic, we need to do some manual parsing first.
@@ -121,7 +128,7 @@ def get_config(path: str | None = None) -> Config:
                 float(i) for i in ini_data["database"]["retry_backoff"].split(",")
             ]
 
-        _CONFIG = Config(**ini_data)
+        _CONFIG = Config.model_validate(ini_data)
     except ValidationError as e:
         raise e
 

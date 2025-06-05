@@ -4,7 +4,7 @@ loglevel=debug
 
 [database]
 # Dsn for database connection
-dsn=postgresql+psycopg://postgres:postgres@localhost:5432/postgres
+dsn=postgresql+psycopg://postgres:postgres@pseudonym_db:5432/postgres
 # Should tables be created if they do not exist
 create_tables=false
 # Retry backoff (in seconds) for database connection
@@ -30,7 +30,7 @@ tracer_name = zmodules.service.pseudonym_service
 
 [stats]
 # Statsd is enabled or not
-enabled = True
+enabled = False
 # Host for statsd server
 host = 127.0.0.1
 # Port for statsd server
