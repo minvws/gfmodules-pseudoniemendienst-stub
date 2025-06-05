@@ -30,7 +30,7 @@ tracer_name = zmodules.service.pseudonym_service
 
 [stats]
 # Statsd is enabled or not
-enabled = True
+enabled = False
 # Host for statsd server
 host = 127.0.0.1
 # Port for statsd server
