@@ -50,7 +50,7 @@ an app.conf mount.
 docker build \
   --build-arg="standalone=true" \
   -f docker/Dockerfile \
-  -t gfmodules-pseudonym-stub \ 
+  -t gfmodules-pseudonym-stub \
   .
 ```
 
@@ -58,7 +58,7 @@ Both containers only differ in their init script and the default version usually
 into the container's /src dir.
 
 ```bash
-docker run -ti --rm -p 8507:8507 \
-      --mount type=bind,source=./app.conf.example,target=/src/app.conf \
-      gfmodules-pseudonym-stub
+docker run -ti --rm -p 8504:8504 \
+  --mount type=bind,source=./app.conf.example,target=/src/app.conf \
+  gfmodules-pseudonym-stub
 ```

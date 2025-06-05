@@ -2,6 +2,7 @@ from typing import TypeVar
 
 from app.db import session
 
+
 class RepositoryBase:
     """
     abstract base class for repository: not yet implemented

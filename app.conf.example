@@ -4,7 +4,7 @@ loglevel=debug
 
 [database]
 # Dsn for database connection
-dsn=postgresql+psycopg://postgres:postgres@localhost:5432/postgres
+dsn=postgresql+psycopg://postgres:postgres@pseudonym_db:5432/postgres
 # Should tables be created if they do not exist
 create_tables=false
 # Retry backoff (in seconds) for database connection

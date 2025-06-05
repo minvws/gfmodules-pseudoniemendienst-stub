@@ -8,15 +8,13 @@ services:
             dockerfile: docker/Dockerfile
         volumes:
             - ./:/src
+        environment:
+            FASTAPI_CONFIG_PATH: /src/app.conf
         ports:
             - 8504:8504
         depends_on:
           pseudonym_db:
             condition: service_healthy
-        networks:
-            zmodules:
-                aliases:
-                    - pseudonym
 
     pseudonym_db:
         image: postgres:15
@@ -30,10 +28,3 @@ services:
             POSTGRES_PASSWORD: postgres
         ports:
             - 5404:5432
-        networks:
-            - zmodules
-
-networks:
-  zmodules:
-    driver: bridge
-    name: zmodules
