@@ -84,7 +84,7 @@ def setup_fastapi() -> FastAPI:
 
     if get_config().stats.enabled:
         fastapi.add_middleware(
-            StatsdMiddleware, module_name=get_config().stats.module_name
+            StatsdMiddleware, module_name=get_config().stats.module_name or ""
         )
 
     return fastapi
