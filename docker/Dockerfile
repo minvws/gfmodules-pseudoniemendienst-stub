@@ -12,31 +12,31 @@ ARG NEW_UID=1000
 ARG NEW_GID=1000
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    POETRY_CACHE_DIR=/tmp/poetry-cache \
-    POETRY_VIRTUALENVS_CREATE=false
+  PYTHONUNBUFFERED=1 \
+  POETRY_CACHE_DIR=/tmp/poetry-cache \
+  POETRY_VIRTUALENVS_CREATE=false
 
 # Create a non-privileged user that the app will run under.
 RUN groupadd --system ${APP_GROUP} --gid=${NEW_GID} && \
-    adduser \
-        --disabled-password \
-        --gecos "" \
-        --uid ${NEW_UID} \
-        --gid ${NEW_GID} \
-        ${APP_USER}
+  adduser \
+  --disabled-password \
+  --gecos "" \
+  --uid ${NEW_UID} \
+  --gid ${NEW_GID} \
+  ${APP_USER}
 
 RUN apt update && \
-    apt install -y \
-        git \
-        gnupg2 \
-        libsqlite3-dev \
-        build-essential \
-        postgresql-client-15 \
-        postgresql-client-common \
-        curl
+  apt install -y \
+  git \
+  gnupg2 \
+  libsqlite3-dev \
+  build-essential \
+  postgresql-client-17 \
+  postgresql-client-common \
+  curl
 
 RUN pip3 install --upgrade pip && \
-    pip3 install poetry --no-cache-dir
+  pip3 install poetry --no-cache-dir
 
 WORKDIR ${PROJECT_DIR}
 
@@ -57,9 +57,9 @@ COPY ./docker/init.sh /usr/local/bin
 ARG standalone=false
 
 RUN if [ "$standalone" = "true" ] ; then \
-    ln -sf /usr/local/bin/init-standalone.sh /docker-entrypoint.sh; \
+  ln -sf /usr/local/bin/init-standalone.sh /docker-entrypoint.sh; \
   else \
-    ln -sf /usr/local/bin/init.sh /docker-entrypoint.sh ; \
+  ln -sf /usr/local/bin/init.sh /docker-entrypoint.sh ; \
   fi
 
 USER ${APP_USER}
