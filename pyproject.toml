@@ -25,7 +25,7 @@ opentelemetry-instrumentation-fastapi = "^0.45b0"
 opentelemetry-instrumentation-requests = "^0.45b0"
 requests = "^2.32.5"
 statsd = "^4.0.1"
-puzi = { git = "https://github.com/minvws/puzi-python" }
+puzi = { git = "https://github.com/minvws/puzi-python.git" }
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.2"
@@ -33,9 +33,9 @@ pytest-cov = "^7.0.0"
 pytest-mock = "^3.15.0"
 httpx = "^0.28.1"
 ruff = "^0.13.0"
-safety = "^3.6.1"
 codespell = "^2.4.1"
 pysqlite3 = "^0.5.4"
+pip-audit = "^2.9.0"
 
 [build-system]
 requires = ["poetry-core"]
