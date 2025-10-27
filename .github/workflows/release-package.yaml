@@ -21,7 +21,7 @@ jobs:
         run: tar -czf nl-irealisatie-zmodules-pseudonym-service_${{ env.RELEASE_VERSION }}.tar.gz app docs tools ./version.json
 
       - name: Upload release tar
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: nl-irealisatie-zmodules-pseudonym-service_${{ env.RELEASE_VERSION }}
           path: nl-irealisatie-zmodules-pseudonym-service_${{ env.RELEASE_VERSION }}.tar.gz
