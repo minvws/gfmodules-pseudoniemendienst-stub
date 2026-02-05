@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # syntax directive is used to enable Docker BuildKit
 
-ARG PYTHON_VERSION=3.11
+ARG PYTHON_VERSION=3.14
 
 FROM python:${PYTHON_VERSION}-slim AS base
 
@@ -48,7 +48,7 @@ RUN --mount=type=cache,target=${POETRY_CACHE_DIR} poetry install --no-root --no-
 FROM base AS final
 
 COPY --chown=${APP_USER}:${APP_GROUP} --from=builder /usr/local /usr/local
-RUN chown -R ${APP_USER}:${APP_GROUP} /usr/local/lib/python3.11/site-packages
+RUN chown -R ${APP_USER}:${APP_GROUP} /usr/local/lib/python3.14/site-packages
 ADD . /src
 
 COPY ./docker/init-standalone.sh /usr/local/bin
